@@ -1,0 +1,21 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.*
+
+# Builds
+dist/
+build/
+.vite/
+
+# Logs
+*.log
+logs/
+
+# Misc
+.DS_Store
+Thumbs.db
