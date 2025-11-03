@@ -6,14 +6,9 @@ export default function Events() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    fetch("http://localhost:4000/api/events", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    fetch("http://localhost:4000/api/events")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Events:", data);
         setEvents(data);
         setLoading(false);
       })
@@ -23,24 +18,43 @@ export default function Events() {
       });
   }, []);
 
-  if (loading) return <p>Loading events...</p>;
-
   return (
-    <div className="container">
-      <h1>Events Page</h1>
+    <div className="page-center" style={{ minHeight: "auto", paddingTop: "40px" }}>
+      <h1>Events</h1>
 
-      {events.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <ul>
+      <p style={{ maxWidth: "600px", opacity: 0.9, marginTop: "10px" }}>
+        To sign up for an event, click on the event and select a shift.
+      </p>
+
+      {/* ✅ Loading State */}
+      {loading && <p>Loading events...</p>}
+
+      {/* ✅ Event Cards */}
+      {!loading && (
+        <div
+          className="card-grid"
+          style={{ marginTop: "40px", width: "100%", maxWidth: "900px" }}
+        >
           {events.map((event) => (
-            <li key={event.id}>
-              <Link to={`/events/${event.id}`}>
+            <Link
+              key={event.id}
+              to={`/events/${event.id}/shifts`}
+              className="card"
+              style={{ textDecoration: "none" }}
+            >
+              <h2>
                 {event.title}
-              </Link>
-            </li>
+                <br />
+                <small>
+                  {new Date(event.event_date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </small>
+              </h2>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

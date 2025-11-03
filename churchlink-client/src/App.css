@@ -1,44 +1,11 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
 
 /* Highlight event dates in the calendar */
@@ -107,4 +74,82 @@
 
 .edit-shift-button:hover {
   background: #666;
+}
+
+/* =========================================================
+   GLOBAL DARK THEME + FONT
+   ========================================================= */
+:root {
+  --bg-dark: #1D202F;
+  --card-dark: #475067;
+  --text-light: #ffffff;
+  --font-main: 'Open Sans', sans-serif;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+}
+
+/* Center page content */
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+/* =========================================================
+   HOME PAGE → CARD GRID
+   ========================================================= */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 40px;
+}
+
+/* Card styles */
+.card {
+  background: var(--card-dark);
+  padding: 40px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 1.6rem;
+  font-weight: 700;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.35);
+}
+
+/* Fix anchor styling inside cards */
+.card h2 {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* Make buttons centered on mobile */
+@media (max-width: 600px) {
+  .card {
+    padding: 30px 15px;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+  }
 }

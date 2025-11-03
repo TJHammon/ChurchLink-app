@@ -1,11 +1,21 @@
+/* =========================================================
+   GLOBAL THEME + RESET
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --bg-dark: #1D202F;
+  --card-dark: #475067;
+  --text-light: #ffffff;
+  --accent: #646cff;
+
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-light);
+  background-color: var(--bg-dark);
+
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,61 +23,119 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================================================
+   LINK STYLES
+   ========================================================= */
+
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--accent);
+  text-decoration: none;
 }
 a:hover {
-  color: #535bf2;
+  color: #9aa0ff;
 }
+
+/* =========================================================
+   BODY RESET
+   ========================================================= */
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
   min-width: 320px;
-  min-height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text-light);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* =========================================================
+   HEADINGS + TEXT
+   ========================================================= */
+
+h1, h2, h3, h4 {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-light);
+  margin-top: 0;
 }
+
+p {
+  color: var(--text-light);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
 button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  font-weight: 500;
+  background-color: #2f3241;
+  color: var(--text-light);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: #3b3f52;
+  border-color: var(--accent);
 }
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 3px solid var(--accent);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* =========================================================
+   CARD STYLES (USED ON HOME / EVENTS / VOLUNTEER)
+   ========================================================= */
+
+.card {
+  background: var(--card-dark);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ==== SHIFT CARD STYLES ==== */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.35);
+}
+
+/* Grid used for Events / Volunteer / Home buttons */
+.card-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================================================
+   CONTAINERS
+   ========================================================= */
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Center all page content globally */
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* =========================================================
+   SHIFT CARDS (YOUR ORIGINAL CODE — PRESERVED)
+   ========================================================= */
 
 .shift-grid {
   display: grid;
@@ -77,27 +145,28 @@ button:focus-visible {
 }
 
 .shift-card {
-  background: #ffffff;
+  background: var(--card-dark);
   padding: 16px;
   border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.12);
-  border-left: 5px solid #1CE783; /* green accent */
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.18);
+  border-left: 5px solid #1CE783;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: var(--text-light);
 }
 
 .shift-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.16);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
 }
 
 .shift-card h3 {
   margin-top: 0;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--text-light);
 }
 
 .shift-card p {
   margin: 6px 0;
   font-size: 0.95rem;
-  color: #444;
+  color: var(--text-light);
 }
