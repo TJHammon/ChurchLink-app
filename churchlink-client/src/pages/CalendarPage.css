@@ -1,0 +1,62 @@
+/* Wrapper */
+.calendar-page-container {
+  text-align: center;
+  padding-top: 40px;
+  min-height: 70vh;
+}
+
+/* Centers the calendar horizontally */
+.calendar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Calendar styles */
+.react-calendar {
+  background: #1e2235;
+  color: white;
+  border: 2px solid #2f3347;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Header buttons */
+.react-calendar__navigation button {
+  color: white !important;
+  background: none !important;
+  font-weight: bold;
+}
+
+/* Weekday labels */
+.react-calendar__month-view__weekdays {
+  color: #aaa;
+  font-weight: 500;
+}
+
+/* Day numbers */
+.react-calendar button {
+  color: #eee !important;
+  background: none !important;
+}
+
+/* Hover */
+.react-calendar__tile:hover {
+  background: #2f3347 !important;
+  color: #fff !important;
+}
+
+/* Event-highlighted dates */
+.event-date {
+  background: #44c1f1 !important;
+  color: #000 !important;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Today's date */
+.react-calendar__tile--now {
+  background: #ffc107 !important;
+  color: #000 !important;
+  border-radius: 6px;
+}

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { apiPost } from "../api";
 
 export default function CreateShift() {
   const { eventId } = useParams();
+
+  const [eventInfo, setEventInfo] = useState(null);
+  const [message, setMessage] = useState("");
 
   const [form, setForm] = useState({
     shift_name: "",
@@ -13,7 +16,13 @@ export default function CreateShift() {
     team_id: ""
   });
 
-  const [message, setMessage] = useState("");
+  // ✅ Fetch event title
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/events/${eventId}`)
+      .then(res => res.json())
+      .then(data => setEventInfo(data))
+      .catch(err => console.error("Error fetching event:", err));
+  }, [eventId]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -42,12 +51,25 @@ export default function CreateShift() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Create Shift for Event #{eventId}</h2>
+    <div className="page-center" style={{ paddingTop: "100px" }}>
+      {/* ✅ Centered headline with real event title */}
+      <h2 style={{ marginBottom: "20px" }}>
+        Create Shift for{" "}
+        <span style={{ color: "#44c1f1" }}>
+          {eventInfo?.title || `Event #${eventId}`}
+        </span>
+      </h2>
 
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", maxWidth: "400px" }}
+        className="shift-form"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          maxWidth: "400px",
+          textAlign: "left"
+        }}
       >
         <label>Shift Name</label>
         <input
@@ -85,7 +107,7 @@ export default function CreateShift() {
           required
         />
 
-        <label>Team ID (optional)</label>
+        <label>Team ID (Optional)</label>
         <input
           type="number"
           name="team_id"
@@ -93,12 +115,12 @@ export default function CreateShift() {
           onChange={handleChange}
         />
 
-        <button type="submit" style={{ marginTop: "15px" }}>
+        <button type="submit" style={{ marginTop: "20px" }}>
           Create Shift
         </button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p style={{ marginTop: "20px" }}>{message}</p>}
     </div>
   );
 }

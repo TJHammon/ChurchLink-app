@@ -4,39 +4,47 @@ import ShiftCard from "../components/ShiftCard.jsx";
 
 export default function EventShifts() {
   const { eventId } = useParams();
+
+  const [eventInfo, setEventInfo] = useState(null);
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const userRole = localStorage.getItem("role");
 
-  // ✅ Fetch shifts
+  // ✅ Fetch event title
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/events/${eventId}`)
+      .then(res => res.json())
+      .then(data => setEventInfo(data))
+      .catch(err => console.error("Event fetch error:", err));
+  }, [eventId]);
+
+  // ✅ Fetch shifts (FIXED URL)
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://localhost:4000/api/shifts/event/${eventId}`, {
+    fetch(`http://localhost:4000/api/shift/event/${eventId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
       .then(data => {
-        console.log("Shifts:", data);
         setShifts(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Fetch error:", err);
+        console.error("Shift fetch error:", err);
         setLoading(false);
       });
   }, [eventId]);
 
-  // ✅ VOLUNTEER SIGNUP HANDLER
+  // ✅ Volunteer signup (FIXED URL)
   const handleSignup = async (shiftId) => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://localhost:4000/api/shifts/${shiftId}/signup`, {
+      const res = await fetch(`http://localhost:4000/api/shift/${shiftId}/signup`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       const data = await res.json();
@@ -48,8 +56,8 @@ export default function EventShifts() {
 
       alert("Signup successful!");
 
-      // ✅ Re-fetch shifts to update volunteer count
-      const updated = await fetch(`http://localhost:4000/api/shifts/event/${eventId}`, {
+      // ✅ Refresh shifts (FIXED URL)
+      const updated = await fetch(`http://localhost:4000/api/shift/event/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -61,44 +69,56 @@ export default function EventShifts() {
     }
   };
 
-  // ✅ DELETE SHIFT HANDLER
+  // ✅ Delete shift (FIXED URL)
   const handleDeleteShift = async (shiftId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this shift?");
-    if (!confirmDelete) return;
+    if (!window.confirm("Delete this shift?")) return;
 
     const token = localStorage.getItem("token");
 
     try {
-      await fetch(`http://localhost:4000/api/shifts/${shiftId}`, {
+      await fetch(`http://localhost:4000/api/shift/${shiftId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
-      // ✅ Remove from UI
       setShifts((prev) => prev.filter((s) => s.id !== shiftId));
-
     } catch (err) {
       console.error("Delete error:", err);
     }
   };
 
-  if (loading) return <p>Loading shifts...</p>;
+  if (loading) return <p style={{ marginTop: "80px" }}>Loading shifts...</p>;
 
   return (
-    <div className="container">
-      <h2>Shifts for Event #{eventId}</h2>
+    <div className="container" style={{ paddingTop: "80px", textAlign: "center" }}>
+      
+      <h2>
+        Shifts for <span style={{ color: "#44c1f1" }}>
+          {eventInfo?.title || "Event"}
+        </span>
+      </h2>
 
-      {/* ✅ Back Button */}
-      <Link to={`/events/${eventId}`} className="back-button">
-        ← Back to Event
+      <Link to="/events" className="back-button">
+        ← Back to Events
       </Link>
 
-      {/* ✅ Create Shift (Admin + TeamLead only) */}
+      {/* ✅ Admin/TeamLead-only Create Shift button */}
       {["Admin", "TeamLead"].includes(userRole) && (
-        <Link to={`/events/${eventId}/shifts/new`} className="create-shift-button">
-          ➕ Create Shift
+        <Link
+          to={`/events/${eventId}/shifts/new`}
+          className="create-shift-button"
+          style={{
+            display: "inline-block",
+            margin: "15px 0",
+            padding: "8px 14px",
+            background: "#44c1f1",
+            color: "white",
+            borderRadius: "6px",
+            textDecoration: "none",
+            fontWeight: 600
+          }}
+        >
+          + Create Shift
         </Link>
       )}
 
@@ -108,43 +128,43 @@ export default function EventShifts() {
         <div className="shift-grid">
           {shifts.map((shift) => (
             <div key={shift.id} className="shift-card-wrapper">
+              
               <ShiftCard shift={shift} />
 
-              {/* ✅ SIGN UP BUTTON (Volunteer only) */}
               {userRole === "Volunteer" && (
                 <button
                   onClick={() => handleSignup(shift.id)}
                   style={{
-                    backgroundColor: "purple",
+                    background: "purple",
                     color: "white",
                     border: "none",
                     padding: "6px 10px",
+                    borderRadius: "4px",
                     cursor: "pointer",
-                    marginTop: "8px",
-                    borderRadius: "4px"
+                    marginTop: "8px"
                   }}
                 >
                   Sign Up
                 </button>
               )}
 
-              {/* ✅ DELETE BUTTON (Admin + TeamLead only) */}
               {["Admin", "TeamLead"].includes(userRole) && (
                 <button
                   onClick={() => handleDeleteShift(shift.id)}
                   style={{
-                    backgroundColor: "red",
+                    background: "red",
                     color: "white",
                     border: "none",
                     padding: "6px 10px",
+                    borderRadius: "4px",
                     cursor: "pointer",
-                    marginTop: "8px",
-                    borderRadius: "4px"
+                    marginTop: "8px"
                   }}
                 >
                   Delete
                 </button>
               )}
+
             </div>
           ))}
         </div>

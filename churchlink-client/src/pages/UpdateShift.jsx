@@ -10,12 +10,11 @@ export default function UpdateShift() {
     start_time: "",
     end_time: "",
     max_volunteers: 1,
-    team_id: null
   });
 
   const [loading, setLoading] = useState(true);
 
-  // ✅ Converts MySQL/ISO → datetime-local format
+  // ✅ Convert MySQL → datetime-local
   function toLocalInputValue(dateString) {
     if (!dateString) return "";
     const d = new Date(dateString);
@@ -37,7 +36,6 @@ export default function UpdateShift() {
           start_time: toLocalInputValue(data.start_time),
           end_time: toLocalInputValue(data.end_time),
           max_volunteers: data.max_volunteers || 1,
-          team_id: data.team_id || null
         });
         setLoading(false);
       })
@@ -51,7 +49,7 @@ export default function UpdateShift() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ Before sending to server: convert datetime-local → MySQL datetime
+  // ✅ Convert datetime-local → MySQL format
   function toMySQLDate(value) {
     return new Date(value).toISOString().slice(0, 19).replace("T", " ");
   }
@@ -65,7 +63,6 @@ export default function UpdateShift() {
       start_time: toMySQLDate(form.start_time),
       end_time: toMySQLDate(form.end_time),
       max_volunteers: form.max_volunteers,
-      team_id: form.team_id
     };
 
     const res = await fetch(`http://localhost:4000/api/shifts/${shiftId}`, {
@@ -85,42 +82,63 @@ export default function UpdateShift() {
     }
   };
 
-  if (loading) return <p>Loading shift...</p>;
+  if (loading) return <p style={{ marginTop: "80px" }}>Loading shift...</p>;
 
   return (
-    <div className="container">
-      <h2>Edit Shift</h2>
+    <div
+      className="page-center"
+      style={{ paddingTop: "100px", paddingBottom: "40px" }}
+    >
+      <h2 style={{ marginBottom: "20px" }}>Edit Shift</h2>
 
-      <form onSubmit={handleSubmit} className="shift-form">
-
-        <label>Shift Name</label>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "#475067",
+          padding: "30px",
+          borderRadius: "12px",
+          width: "100%",
+          maxWidth: "450px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+          textAlign: "left",
+          color: "white",
+        }}
+      >
+        {/* SHIFT NAME */}
+        <label style={{ fontWeight: "600" }}>Shift Name</label>
         <input
           type="text"
           name="shift_name"
           value={form.shift_name}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
-        <label>Start Time</label>
+        {/* START TIME */}
+        <label style={{ fontWeight: "600" }}>Start Time</label>
         <input
           type="datetime-local"
           name="start_time"
           value={form.start_time}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
-        <label>End Time</label>
+        {/* END TIME */}
+        <label style={{ fontWeight: "600" }}>End Time</label>
         <input
           type="datetime-local"
           name="end_time"
           value={form.end_time}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
-        <label>Max Volunteers</label>
+        {/* MAX VOLUNTEERS */}
+        <label style={{ fontWeight: "600" }}>Max Volunteers</label>
         <input
           type="number"
           name="max_volunteers"
@@ -128,10 +146,38 @@ export default function UpdateShift() {
           value={form.max_volunteers}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
-        <button type="submit">Update Shift</button>
+        {/* SUBMIT BUTTON */}
+        <button
+          type="submit"
+          style={{
+            marginTop: "20px",
+            width: "100%",
+            padding: "12px",
+            background: "#44c1f1",
+            border: "none",
+            borderRadius: "6px",
+            color: "#1D202F",
+            fontSize: "1rem",
+            fontWeight: "700",
+            cursor: "pointer",
+          }}
+        >
+          Update Shift
+        </button>
       </form>
     </div>
   );
 }
+
+// ✅ Shared input style
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  margin: "8px 0 16px 0",
+  borderRadius: "6px",
+  border: "none",
+  fontSize: "1rem",
+};
