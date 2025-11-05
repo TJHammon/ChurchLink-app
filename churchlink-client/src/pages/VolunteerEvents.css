@@ -1,0 +1,138 @@
+/* =========================================================
+   VOLUNTEER EVENTS PAGE STYLES
+   ========================================================= */
+
+.volunteer-page {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.volunteer-events-grid {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Event Cards */
+.volunteer-card {
+  background: var(--card-dark);
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.volunteer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.35);
+}
+
+.volunteer-card h2 {
+  color: var(--text-light);
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.volunteer-card small {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* View Shifts Button */
+.view-shifts-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #44c1f1;
+  color: #000;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.view-shifts-btn:hover {
+  background: #66d2ff;
+}
+
+/* Calendar Container */
+.calendar-box {
+  margin-top: 50px;
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+}
+
+/* Calendar dark-mode style */
+.react-calendar {
+  background: #1d202f !important;
+  color: white !important;
+  border-radius: 10px;
+  padding: 10px !important;
+  border: 1px solid #2f3347 !important;
+}
+
+.react-calendar__navigation button {
+  color: white !important;
+}
+
+.react-calendar__tile {
+  color: white !important;
+}
+
+.react-calendar__tile:hover {
+  background: #2f3347 !important;
+}
+
+.event-date {
+  background-color: #44c1f1 !important;
+  color: black !important;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.react-calendar__tile--now {
+  background: #ffc107 !important;
+  color: #000 !important;
+  border-radius: 8px;
+}
+
+/* === Event Shifts Page Layout === */
+.event-shifts-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 80px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.event-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.event-header-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.event-header {
+  margin-bottom: 30px !important;
+}
+
+

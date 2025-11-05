@@ -9,3 +9,98 @@
 .container {
   padding-top: 80px;
 }
+
+.event-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.event-header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.08);
+  color: #8fc7ff;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.create-shift-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #44c1f1;
+  color: #000;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.create-shift-btn:hover {
+  background: #6fd0ff;
+}
+
+/* ==========================================
+   EVENT SHIFTS PAGE LAYOUT FIX
+   ========================================== */
+
+.event-shifts-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 100px;
+  text-align: center;
+}
+
+/* Centered title */
+.event-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+/* Make sure actions stay centered */
+.event-header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* === Event Shifts Page Layout === */
+.event-shifts-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 80px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.event-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.event-header-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}

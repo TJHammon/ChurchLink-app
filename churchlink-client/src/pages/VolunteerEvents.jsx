@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+import "./VolunteerEvents.css"; // ✅ NEW
+
 export default function VolunteerEvents() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,23 +38,17 @@ export default function VolunteerEvents() {
   }
 
   return (
-    <div className="page-center" style={{ paddingTop: "80px", textAlign: "center" }}>
+    <div className="volunteer-page">
+
       <h1>Volunteer Events</h1>
 
       {/* ✅ Event Cards */}
       {events.length === 0 ? (
         <p>No events available.</p>
       ) : (
-        <div
-          className="card-grid"
-          style={{
-            marginTop: "40px",
-            width: "100%",
-            maxWidth: "900px",
-          }}
-        >
+        <div className="volunteer-events-grid">
           {events.map((event) => (
-            <div key={event.id} className="card">
+            <div key={event.id} className="volunteer-card">
               <h2>
                 {event.title}
                 <br />
@@ -67,20 +63,8 @@ export default function VolunteerEvents() {
                 </small>
               </h2>
 
-              {/* ✅ View Shifts button */}
-              <Link
-                to={`/events/${event.id}/shifts`}
-                style={{
-                  marginTop: "15px",
-                  display: "inline-block",
-                  padding: "8px 16px",
-                  background: "#44c1f1",
-                  color: "#000",
-                  borderRadius: "6px",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                }}
-              >
+              {/* ✅ View Shifts */}
+              <Link to={`/events/${event.id}/shifts`} className="view-shifts-btn">
                 View Shifts
               </Link>
             </div>
@@ -89,19 +73,8 @@ export default function VolunteerEvents() {
       )}
 
       {/* ✅ Calendar Section */}
-      <div
-        style={{
-          marginTop: "60px",
-          width: "100%",
-          maxWidth: "320px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          padding: "20px",
-          background: "rgba(255,255,255,0.05)",
-          borderRadius: "12px",
-        }}
-      >
-        <h3 style={{ marginBottom: "15px" }}>Calendar</h3>
+      <div className="calendar-box">
+        <h3>Calendar</h3>
 
         <Calendar
           tileClassName={({ date }) => {
@@ -116,35 +89,6 @@ export default function VolunteerEvents() {
         />
       </div>
 
-      {/* ✅ Highlight event days on calendar */}
-      <style>
-        {`
-          .event-date {
-            background-color: #44c1f1 !important;
-            color: black !important;
-            border-radius: 8px;
-          }
-
-          .react-calendar {
-            background: #1d202f !important;
-            color: white !important;
-            border: none !important;
-            border-radius: 12px;
-          }
-
-          .react-calendar__navigation button {
-            color: white !important;
-          }
-
-          .react-calendar__tile {
-            color: white !important;
-          }
-
-          .react-calendar__month-view__days__day--weekend {
-            color: #ccc !important;
-          }
-        `}
-      </style>
     </div>
   );
 }

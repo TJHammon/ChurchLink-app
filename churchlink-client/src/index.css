@@ -123,3 +123,21 @@ button:hover {
   transform: translateY(-3px);
   box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
 }
+
+/* VIEW SHIFTS BUTTON */
+.view-shifts-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #44c1f1;
+  color: #000;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.view-shifts-btn:hover {
+  background: #1ce783;
+  transform: translateY(-3px);
+}
