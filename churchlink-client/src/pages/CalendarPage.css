@@ -1,43 +1,63 @@
-/* Wrapper */
+/* ================================
+   CALENDAR PAGE LAYOUT
+================================ */
 .calendar-page-container {
   text-align: center;
-  padding-top: 40px;
+  padding-top: 40px;              /* leave this unless it's too close */
   min-height: 70vh;
 }
 
-/* Centers the calendar horizontally */
+/* Center the calendar + allow it to grow */
 .calendar-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
+  width: 100%;
 }
 
-/* Calendar styles */
+/* ================================
+   CALENDAR SIZE BOOST ✅
+================================ */
 .react-calendar {
   background: #1e2235;
   color: white;
   border: 2px solid #2f3347;
   border-radius: 10px;
-  padding: 20px;
+
+  /* ✅ THIS is the important part */
+  width: 700px;        /* desktop size */
+  max-width: 90vw;     /* responsive for tablets/mobile */
+  padding: 30px;
+  font-size: 1.2rem;   /* bumps text size */
 }
 
-/* Header buttons */
+/* ================================
+   NAVIGATION (month/year)
+================================ */
 .react-calendar__navigation button {
   color: white !important;
   background: none !important;
   font-weight: bold;
+  font-size: 1.1rem;     /* slightly larger header */
 }
 
 /* Weekday labels */
 .react-calendar__month-view__weekdays {
   color: #aaa;
   font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Day tiles */
+.react-calendar__tile {
+  padding: 12px 6px !important;
 }
 
 /* Day numbers */
 .react-calendar button {
   color: #eee !important;
   background: none !important;
+  font-size: 1.1rem;
 }
 
 /* Hover */
@@ -46,7 +66,7 @@
   color: #fff !important;
 }
 
-/* Event-highlighted dates */
+/* Highlight event dates */
 .event-date {
   background: #44c1f1 !important;
   color: #000 !important;
@@ -54,7 +74,7 @@
   font-weight: bold;
 }
 
-/* Today's date */
+/* Highlight today's date */
 .react-calendar__tile--now {
   background: #ffc107 !important;
   color: #000 !important;

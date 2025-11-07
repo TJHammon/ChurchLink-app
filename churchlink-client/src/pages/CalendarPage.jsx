@@ -37,7 +37,7 @@ export default function CalendarPage() {
 
   return (
     <div className="calendar-page-container">
-      <h2>Calendar</h2>
+      <h1>Calendar</h1>
 
       <div className="calendar-wrapper">
         <Calendar

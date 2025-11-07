@@ -1,54 +1,47 @@
 import { Link, useParams } from "react-router-dom";
 
-export default function ShiftCard({ shift }) {
+export default function ShiftCard({ shift, onDelete }) {
   const { eventId } = useParams();
   const userRole = localStorage.getItem("role");
 
-  return (
-    <div
-      className="shift-card"
-      style={{
-        background: "var(--card-dark)",
-        padding: "24px",
-        borderRadius: "14px",
-        color: "var(--text-light)",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        textAlign: "left",
-      }}
-    >
-      <h3 style={{ marginTop: 0, marginBottom: "10px", fontSize: "1.3rem" }}>
-        {shift.shift_name}
-      </h3>
+  // ✅ Format time only (no date, no seconds)
+  const formatTime = (iso) => {
+    return new Date(iso).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  };
 
-      <p style={{ margin: "6px 0", opacity: 0.9 }}>
+  return (
+    <div className="shift-card">
+      <h3 className="shift-title">{shift.shift_name}</h3>
+
+      <p className="shift-time">
         <strong>Time:</strong><br />
-        {new Date(shift.start_time).toLocaleString()}<br />
-        → {new Date(shift.end_time).toLocaleString()}
+        {formatTime(shift.start_time)} → {formatTime(shift.end_time)}
       </p>
 
-      <p style={{ margin: "6px 0", opacity: 0.9 }}>
+      <p className="shift-volunteers">
         <strong>Volunteers:</strong> {shift.signup_count}/{shift.max_volunteers}
       </p>
 
-      {/* ✅ Edit button (Admin + TeamLead) */}
+      {/* ✅ BUTTON ROW */}
       {["Admin", "TeamLead"].includes(userRole) && (
-        <Link
-          to={`/events/${eventId}/shifts/${shift.id}/edit`}
-          style={{
-            display: "inline-block",
-            marginTop: "12px",
-            padding: "6px 12px",
-            background: "#44c1f1",
-            color: "white",
-            borderRadius: "6px",
-            textDecoration: "none",
-            fontWeight: 600,
-            fontSize: "0.9rem",
-          }}
-        >
-          Edit Shift
-        </Link>
+        <div className="shift-buttons">
+          <Link
+            to={`/events/${eventId}/shifts/${shift.id}/edit`}
+            className="shift-btn edit-btn"
+          >
+            Edit
+          </Link>
+
+          <button
+            className="shift-btn delete-btn"
+            onClick={() => onDelete(shift.id)}
+          >
+            Delete
+          </button>
+        </div>
       )}
     </div>
   );

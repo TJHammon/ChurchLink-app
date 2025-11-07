@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,17 +19,14 @@ export default function Login() {
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Store token
         localStorage.setItem("token", data.token);
 
-        // ✅ Store role (THIS FIXES THE WHITE SCREEN)
         if (data.user && data.user.role) {
           localStorage.setItem("role", data.user.role);
         }
 
         setMessage("Login successful!");
 
-        // ✅ redirect after login
         setTimeout(() => {
           window.location.href = "/";
         }, 500);
@@ -44,10 +42,11 @@ export default function Login() {
 
   return (
     <div className="auth-container">
-      <h2>Login</h2>
+      <h1>Login</h1>
 
-      <form onSubmit={handleLogin}>
+      <form className="auth-form" onSubmit={handleLogin}>
         <input
+          className="auth-input"
           type="email"
           placeholder="Email"
           value={email}
@@ -56,6 +55,7 @@ export default function Login() {
         />
 
         <input
+          className="auth-input"
           type="password"
           placeholder="Password"
           value={password}
@@ -63,10 +63,10 @@ export default function Login() {
           required
         />
 
-        <button type="submit">Login</button>
+        <button className="auth-btn" type="submit">Login</button>
       </form>
 
-      <p>{message}</p>
+      <p className="auth-message">{message}</p>
     </div>
   );
 }

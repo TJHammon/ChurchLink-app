@@ -11,9 +11,16 @@ export default function EventShifts() {
 
   const userRole = localStorage.getItem("role");
 
+  // ✅ Always use a safe array to prevent .map() crashes
+  const safeShifts = Array.isArray(shifts) ? shifts : [];
+
   // ✅ Fetch event title
   useEffect(() => {
-    fetch(`http://localhost:4000/api/events/${eventId}`)
+    const token = localStorage.getItem("token");
+
+    fetch(`http://localhost:4000/api/events/${eventId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((res) => res.json())
       .then((data) => setEventInfo(data))
       .catch((err) => console.error("Event fetch error:", err));
@@ -23,12 +30,12 @@ export default function EventShifts() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://localhost:4000/api/shift/event/${eventId}`, {
-      headers: { Authorization: `Bearer ${token}` },
+    fetch(`http://localhost:4000/api/shifts/event/${eventId}`, {
+      headers: { Authorization: `Bearer ${token}` }
     })
       .then((res) => res.json())
       .then((data) => {
-        setShifts(data);
+        setShifts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch((err) => {
@@ -43,10 +50,10 @@ export default function EventShifts() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/api/shift/${shiftId}/signup`,
+        `http://localhost:4000/api/shifts/${shiftId}/signup`,
         {
           method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         }
       );
 
@@ -61,14 +68,14 @@ export default function EventShifts() {
 
       // Refresh shifts
       const updated = await fetch(
-        `http://localhost:4000/api/shift/event/${eventId}`,
+        `http://localhost:4000/api/shifts/event/${eventId}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         }
       );
 
       const updatedData = await updated.json();
-      setShifts(updatedData);
+      setShifts(Array.isArray(updatedData) ? updatedData : []);
     } catch (err) {
       console.error("Signup error:", err);
     }
@@ -81,9 +88,9 @@ export default function EventShifts() {
     const token = localStorage.getItem("token");
 
     try {
-      await fetch(`http://localhost:4000/api/shift/${shiftId}`, {
+      await fetch(`http://localhost:4000/api/shifts/${shiftId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       setShifts((prev) => prev.filter((s) => s.id !== shiftId));
@@ -98,58 +105,42 @@ export default function EventShifts() {
   return (
     <div className="event-shifts-container">
 
-      {/* ✅ HEADER */}
+      {/* ✅ Header with title only */}
       <div className="event-header">
         <h1 className="event-title">{eventInfo?.title || "Event"}</h1>
-
-        <div className="event-header-actions">
-          <Link to="/events" className="back-button">
-            ← Back to Events
-          </Link>
-
-          {["Admin", "TeamLead"].includes(userRole) && (
-            <Link
-              to={`/events/${eventId}/shifts/new`}
-              className="create-shift-btn"
-            >
-              + Create Shift
-            </Link>
-          )}
-        </div>
       </div>
 
-      {/* ✅ SHIFT GRID */}
-      {shifts.length === 0 ? (
+      {/* ✅ Shift Grid */}
+      {safeShifts.length === 0 ? (
         <p className="no-shifts-message">No shifts found.</p>
       ) : (
         <div className="shift-grid">
-          {shifts.map((shift) => (
+          {safeShifts.map((shift) => (
             <div key={shift.id} className="shift-card-wrapper">
-              <ShiftCard shift={shift} />
-
-              {/* ✅ Volunteer SIGN UP */}
-              {userRole === "Volunteer" && (
-                <button
-                  className="signup-btn"
-                  onClick={() => handleSignup(shift.id)}
-                >
-                  Sign Up
-                </button>
-              )}
-
-              {/* ✅ Admin Delete */}
-              {["Admin", "TeamLead"].includes(userRole) && (
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDeleteShift(shift.id)}
-                >
-                  Delete
-                </button>
-              )}
+              <ShiftCard
+                shift={shift}
+                onDelete={handleDeleteShift}
+                onSignup={handleSignup}
+              />
             </div>
           ))}
         </div>
       )}
+
+      {/* ✅ Buttons moved below shifts */}
+      <div className="event-footer-actions" style={{ marginTop: "40px" }}>
+        <Link to="/events" className="back-button">← Back to Events</Link>
+
+        {["Admin", "TeamLead"].includes(userRole) && (
+          <Link
+            to={`/events/${eventId}/shifts/new`}
+            className="create-shift-btn"
+          >
+            + Create Shift
+          </Link>
+        )}
+      </div>
+
     </div>
   );
 }

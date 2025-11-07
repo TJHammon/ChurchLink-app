@@ -11,7 +11,8 @@ import VolunteerEvents from './pages/VolunteerEvents.jsx';
 import EventShifts from "./pages/EventShifts.jsx";
 import CreateShift from "./pages/CreateShift.jsx";
 import UpdateShift from "./pages/UpdateShift.jsx";
-import CalendarPage from "./pages/CalendarPage.jsx";   // ✅ NEW IMPORT
+import CalendarPage from "./pages/CalendarPage.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";   // ✅ NEW IMPORT
 
 import './index.css';
 
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
 
       // ✅ Events pages
       { path: 'events', element: <Events /> },
+      { path: 'events/new', element: <CreateEvent /> },
       { path: 'events/:eventId', element: <EventShifts /> },
       { path: 'events/:eventId/shifts', element: <EventShifts /> },
       { path: 'events/:eventId/shifts/new', element: <CreateShift /> },

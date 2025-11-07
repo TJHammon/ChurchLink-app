@@ -1,0 +1,95 @@
+/* ===========================
+   HOME PAGE BACKGROUND
+   =========================== */
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 0;
+}
+
+
+/* Centered content wrapper */
+.home-container {
+  width: 90%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+.home-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: left; /* ✅ left align inside container */
+  margin-bottom: 70px;
+  color: white;
+}
+
+.home-title span {
+  color: #3BC6C5;
+}
+
+/* ===========================
+   CARDS
+   =========================== */
+.home-card-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.home-card {
+  width: 280px;
+  height: 150px;
+  background: #0C0C0C;
+  border: 3px solid #3BC6C5;
+  border-radius: 0; /* ✅ squared */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+
+  text-decoration: none;
+  transition: 0.25s ease;
+
+  /* ✅ GLOW */
+  box-shadow: 0 0 15px rgba(59, 198, 197, 0.5);
+}
+
+.home-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(59, 198, 197, 0.8);
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2.2rem;
+    text-align: center; /* ✅ mobile-friendly */
+  }
+
+  .home-card {
+    width: 240px;
+    height: 130px;
+    font-size: 1.7rem;
+  }
+}
+
+/* ===========================================
+   HOME PAGE — Larger Card Text Override
+   =========================================== */
+.home-page .card-grid .card h2 {
+  font-size: 2.5rem !important;
+}
+

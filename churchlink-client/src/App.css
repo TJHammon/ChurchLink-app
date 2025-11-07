@@ -104,3 +104,11 @@
   gap: 20px;
   justify-content: center;
 }
+
+.event-footer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+

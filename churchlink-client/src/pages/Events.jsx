@@ -5,13 +5,19 @@ export default function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const userRole = localStorage.getItem("role");
+
   useEffect(() => {
     fetch("http://localhost:4000/api/events")
       .then((res) => res.json())
       .then((data) => {
-        setEvents(data);
-        setLoading(false);
-      })
+      const sorted = data.sort(
+        (a, b) => new Date(a.event_date) - new Date(b.event_date)
+      );
+      setEvents(sorted);
+      setLoading(false);
+    })
+
       .catch((err) => {
         console.error("Error fetching events:", err);
         setLoading(false);
@@ -31,30 +37,53 @@ export default function Events() {
 
       {/* ✅ Event Cards */}
       {!loading && (
-        <div
-          className="card-grid"
-          style={{ marginTop: "40px", width: "100%", maxWidth: "900px" }}
-        >
-          {events.map((event) => (
-            <Link
-              key={event.id}
-              to={`/events/${event.id}/shifts`}
-              className="card"
-              style={{ textDecoration: "none" }}
-            >
-              <h2>
-                {event.title}
-                <br />
-                <small>
-                  {new Date(event.event_date).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </small>
-              </h2>
-            </Link>
-          ))}
-        </div>
+        <>
+          <div
+            className="events-grid"
+            style={{ width: "100%", maxWidth: "900px", marginTop: "40px" }}
+          >
+            {events.map((event) => (
+              <Link
+                key={event.id}
+                to={`/events/${event.id}/shifts`}
+                className="event-card"
+                style={{ textDecoration: "none" }}
+              >
+                <h2>
+                  {event.title}
+                  <br />
+                  <small style={{ fontWeight: "400" }}>
+                    {new Date(event.event_date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </small>
+                </h2>
+              </Link>
+            ))}
+          </div>
+
+          {/* ✅ Admin-only Create Event button */}
+          {userRole === "Admin" && (
+            <div style={{ marginTop: "40px", textAlign: "center" }}>
+              <Link
+                to="/events/new"
+                style={{
+                  padding: "12px 24px",
+                  background: "#44c1f1",
+                  color: "#1D202F",
+                  borderRadius: "8px",
+                  fontWeight: "700",
+                  fontSize: "1.1rem",
+                  textDecoration: "none",
+                  display: "inline-block"
+                }}
+              >
+                + Create Event
+              </Link>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

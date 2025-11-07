@@ -12,6 +12,13 @@
   --font-main: 'Open Sans', sans-serif;
 }
 
+/* Ensure padding/border are included in width/height calculations */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -29,6 +36,13 @@ h1, h2, h3, h4, p, a {
   color: var(--text-light);
   margin-top: 0;
 }
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
 
 a {
   font-weight: 500;
@@ -80,18 +94,51 @@ button:hover {
    ========================================================= */
 
 .card-grid {
-  display: grid;
-  gap: 24px;
-  margin-top: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: nowrap;
+  margin-top: 50px;
 }
 
 .card {
   background: var(--card-dark);
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  width: 420px;
+  height: 200px;
+
+  /* perfect center */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  border-radius: 20px;
+  box-shadow: 0px 4px 14px rgba(0,0,0,0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Event Card Text Centering — only applies inside card grids */
+.card-grid .card h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical centering */
+  align-items: center;       /* horizontal centering */
+  text-align: center;
+  font-size: 1.6rem;         /* smaller than home page cards */
+  line-height: 1.2;
+}
+
+.card-grid .card h2 small {
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.9;
 }
 
 .card:hover {
@@ -100,44 +147,166 @@ button:hover {
 }
 
 /* =========================================================
+   EVENT PAGE CARD STYLES
+   ========================================================= */
+
+.event-card {
+  background: var(--card-dark);
+  width: 260px;            /* perfect for 3 per row on desktop */
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  border-radius: 20px;
+  box-shadow: 0px 4px 14px rgba(0,0,0,0.28);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.35);
+}
+
+/* event title + date */
+.event-card h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-card h2 small {
+  margin-top: 4px;
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.event-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Events page layout */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  justify-items: center;
+  margin-top: 40px;
+}
+
+/* Mobile: 2 per row */
+@media (max-width: 600px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
    SHIFT CARDS
    ========================================================= */
 
 .shift-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 25px;
 }
 
+/* Full wrapper (keeps card clean if you add more buttons later) */
+.shift-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Actual shift card */
 .shift-card {
   background: var(--card-dark);
-  padding: 16px;
-  border-radius: 10px;
-  border-left: 5px solid #1CE783;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.18);
+  padding: 20px;
+  width: 300px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.22);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: var(--text-light);
+  text-align: left;
 }
 
 .shift-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.28);
 }
 
-/* VIEW SHIFTS BUTTON */
-.view-shifts-btn {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 8px 14px;
+/* Shift title */
+.shift-title {
+  margin: 0 0 14px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Time line and volunteer line */
+.shift-time,
+.shift-volunteers {
+  margin: 8px 0;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+/* Button row */
+.shift-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* Shared button style */
+.shift-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+/* Edit button */
+.edit-btn {
   background: #44c1f1;
   color: #000;
-  border-radius: 6px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.view-shifts-btn:hover {
+.edit-btn:hover {
   background: #1ce783;
-  transform: translateY(-3px);
+}
+
+/* Delete button */
+.delete-btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: #ff6f6f;
+}
+
+.event-footer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
 }
