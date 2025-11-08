@@ -9,10 +9,10 @@ export default function EventShifts() {
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const userRole = localStorage.getItem("role");
+  const [showPopup, setShowPopup] = useState(false);     // ✅ popup control
+  const [selectedShift, setSelectedShift] = useState(null); // ✅ track shift
 
-  // ✅ Always use a safe array to prevent .map() crashes
-  const safeShifts = Array.isArray(shifts) ? shifts : [];
+  const userRole = localStorage.getItem("role");
 
   // ✅ Fetch event title
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function EventShifts() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setShifts(Array.isArray(data) ? data : []);
+        setShifts(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -44,8 +44,35 @@ export default function EventShifts() {
       });
   }, [eventId]);
 
-  // ✅ Volunteer signup
-  const handleSignup = async (shiftId) => {
+  // ✅ Delete shift
+  const handleDeleteShift = async (shiftId) => {
+    if (!window.confirm("Delete this shift?")) return;
+
+    const token = localStorage.getItem("token");
+
+    try {
+      await fetch(`http://localhost:4000/api/shifts/${shiftId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setShifts((prev) => prev.filter((s) => s.id !== shiftId));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
+  // ✅ Open popup for volunteer signup
+  const handleSignupClick = (shiftId) => {
+    setSelectedShift(shiftId);
+    setShowPopup(true);
+  };
+
+  // ✅ Confirm signup runs only after popup approves
+  const confirmSignup = async () => {
+    const shiftId = selectedShift;
+    setShowPopup(false);
+
     const token = localStorage.getItem("token");
 
     try {
@@ -66,7 +93,7 @@ export default function EventShifts() {
 
       alert("Signup successful!");
 
-      // Refresh shifts
+      // ✅ Refresh shifts
       const updated = await fetch(
         `http://localhost:4000/api/shifts/event/${eventId}`,
         {
@@ -75,27 +102,9 @@ export default function EventShifts() {
       );
 
       const updatedData = await updated.json();
-      setShifts(Array.isArray(updatedData) ? updatedData : []);
+      setShifts(updatedData);
     } catch (err) {
       console.error("Signup error:", err);
-    }
-  };
-
-  // ✅ Delete shift
-  const handleDeleteShift = async (shiftId) => {
-    if (!window.confirm("Delete this shift?")) return;
-
-    const token = localStorage.getItem("token");
-
-    try {
-      await fetch(`http://localhost:4000/api/shifts/${shiftId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      setShifts((prev) => prev.filter((s) => s.id !== shiftId));
-    } catch (err) {
-      console.error("Delete error:", err);
     }
   };
 
@@ -105,29 +114,29 @@ export default function EventShifts() {
   return (
     <div className="event-shifts-container">
 
-      {/* ✅ Header with title only */}
+      {/* ✅ Event Title */}
       <div className="event-header">
         <h1 className="event-title">{eventInfo?.title || "Event"}</h1>
       </div>
 
       {/* ✅ Shift Grid */}
-      {safeShifts.length === 0 ? (
+      {shifts.length === 0 ? (
         <p className="no-shifts-message">No shifts found.</p>
       ) : (
         <div className="shift-grid">
-          {safeShifts.map((shift) => (
+          {shifts.map((shift) => (
             <div key={shift.id} className="shift-card-wrapper">
               <ShiftCard
                 shift={shift}
                 onDelete={handleDeleteShift}
-                onSignup={handleSignup}
+                onSignup={handleSignupClick}  // ✅ popup trigger
               />
             </div>
           ))}
         </div>
       )}
 
-      {/* ✅ Buttons moved below shifts */}
+      {/* ✅ Footer Actions (bottom of page) */}
       <div className="event-footer-actions" style={{ marginTop: "40px" }}>
         <Link to="/events" className="back-button">← Back to Events</Link>
 
@@ -140,6 +149,28 @@ export default function EventShifts() {
           </Link>
         )}
       </div>
+
+      {/* ✅ SIGNUP POPUP */}
+      {showPopup && (
+        <div className="signup-popup-overlay">
+          <div className="signup-popup">
+            <h2>Sign up for this shift?</h2>
+
+            <div className="popup-buttons">
+              <button onClick={confirmSignup} className="confirm-btn">
+                Confirm
+              </button>
+
+              <button
+                onClick={() => setShowPopup(false)}
+                className="cancel-btn"
+              >
+                No Thanks
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// ✅ Map event titles → image files in /public
+const eventImages = {
+  "Men's Breakfast": "/mensbreakfast.avif",
+  "Youth Night": "/youthnight.avif",
+  "Women's Breakfast": "/womanbreakfast.avif",
+  "Prayer Group": "/prayer.avif",
+  "Lego Night": "/lego.avif",
+  "Senior's Brunch": "/brunch.avif",
+  "Bible Study": "/study.avif",
+  "Thanksgiving Carry-In": "/thanksgiving.avif",
+  "Wedding": "/wedding.avif",
+};
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,13 +24,12 @@ export default function Events() {
     fetch("http://localhost:4000/api/events")
       .then((res) => res.json())
       .then((data) => {
-      const sorted = data.sort(
-        (a, b) => new Date(a.event_date) - new Date(b.event_date)
-      );
-      setEvents(sorted);
-      setLoading(false);
-    })
-
+        const sorted = data.sort(
+          (a, b) => new Date(a.event_date) - new Date(b.event_date)
+        );
+        setEvents(sorted);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error("Error fetching events:", err);
         setLoading(false);
@@ -35,9 +47,9 @@ export default function Events() {
       {/* ✅ Loading State */}
       {loading && <p>Loading events...</p>}
 
-      {/* ✅ Event Cards */}
       {!loading && (
         <>
+          {/* ✅ Event Cards */}
           <div
             className="events-grid"
             style={{ width: "100%", maxWidth: "900px", marginTop: "40px" }}
@@ -46,9 +58,14 @@ export default function Events() {
               <Link
                 key={event.id}
                 to={`/events/${event.id}/shifts`}
-                className="event-card"
-                style={{ textDecoration: "none" }}
+                className="event-card image-event-card"
+                style={{
+                  textDecoration: "none",
+                  backgroundImage: `url(${eventImages[event.title] || "/default.avif"})`,
+                }}
               >
+                <div className="event-card-overlay"></div>
+
                 <h2>
                   {event.title}
                   <br />
@@ -76,7 +93,7 @@ export default function Events() {
                   fontWeight: "700",
                   fontSize: "1.1rem",
                   textDecoration: "none",
-                  display: "inline-block"
+                  display: "inline-block",
                 }}
               >
                 + Create Event

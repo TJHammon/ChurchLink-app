@@ -15,16 +15,16 @@ export default function Home() {
         }}
       >
         {/* ✅ Calendar card (replaces Home card) */}
-        <Link to="/calendar" className="card">
+        <Link to="/calendar" className="card calendar-card">
           <h2>Calendar</h2>
         </Link>
 
-        <Link to="/events" className="card">
+        <Link to="/events" className="card events-card">
           <h2>Events</h2>
         </Link>
 
-        <Link to="/volunteer" className="card">
-          <h2>Volunteer</h2>
+        <Link to="/volunteer" className="card getinvolved-card">
+          <h2>Get Involved</h2>
         </Link>
       </div>
     </div>

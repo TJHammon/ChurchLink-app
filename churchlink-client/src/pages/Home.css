@@ -93,3 +93,36 @@
   font-size: 2.5rem !important;
 }
 
+/* ============================
+   CALENDAR CARD WITH IMAGE
+============================= */
+
+.calendar-card {
+  background-image: url("/calendar2.avif") !important;
+  background-size: cover !important;
+  background-position: center !important;
+
+  /* ✅ Override the normal card styling */
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ✅ Dark overlay for readable text */
+.calendar-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* ✅ Bring text above overlay */
+.calendar-card h2 {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}

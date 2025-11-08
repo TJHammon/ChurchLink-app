@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-export default function ShiftCard({ shift, onDelete }) {
+export default function ShiftCard({ shift, onDelete, onSignup }) {
   const { eventId } = useParams();
   const userRole = localStorage.getItem("role");
 
@@ -25,7 +25,7 @@ export default function ShiftCard({ shift, onDelete }) {
         <strong>Volunteers:</strong> {shift.signup_count}/{shift.max_volunteers}
       </p>
 
-      {/* ✅ BUTTON ROW */}
+      {/* ✅ ADMIN / TEAM LEAD BUTTONS */}
       {["Admin", "TeamLead"].includes(userRole) && (
         <div className="shift-buttons">
           <Link
@@ -40,6 +40,23 @@ export default function ShiftCard({ shift, onDelete }) {
             onClick={() => onDelete(shift.id)}
           >
             Delete
+          </button>
+        </div>
+      )}
+
+      {/* ✅ VOLUNTEER SIGN UP BUTTON */}
+      {userRole === "Volunteer" && (
+        <div className="shift-buttons">
+          <button
+            className="shift-btn"
+            onClick={() => onSignup(shift.id)}
+            style={{
+              background: "#44c1f1",
+              color: "#000",
+              fontWeight: "700"
+            }}
+          >
+            Sign Up
           </button>
         </div>
       )}

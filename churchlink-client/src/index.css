@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #1D202F;
+  --bg-gradient: linear-gradient(180deg, #0f1420 25%, #1D202F 50%, #1f2a3d 100%);
   --card-dark: #475067;
   --text-light: #ffffff;
   --accent: #44c1f1;
@@ -22,7 +22,9 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg-dark);
+  background: var(--bg-gradient);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text-light);
   font-family: var(--font-main);
   min-width: 320px;
@@ -291,7 +293,8 @@ button:hover {
 }
 
 .edit-btn:hover {
-  background: #1ce783;
+  background: #2fa8d8;
+  color: #000 !important;
 }
 
 /* Delete button */
@@ -309,4 +312,262 @@ button:hover {
   justify-content: center;
   gap: 30px;
   margin-top: 40px;
+}
+
+/* ================================
+   SHIFT SIGNUP POPUP
+================================ */
+
+.signup-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.signup-popup {
+  background: #1d202f;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(0,0,0,0.4);
+}
+
+.signup-popup h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  gap: 20px;
+}
+
+/* ✅ BLUE CONFIRM BUTTON */
+.confirm-btn {
+  padding: 12px;
+  background: #44c1f1;
+  color: #000;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  border: none;
+  transition: 0.25s;
+}
+
+.confirm-btn:hover {
+  background: #6ad8ff;
+}
+
+/* ✅ RED "No Thanks" button (matches delete button theme) */
+.cancel-btn {
+  padding: 12px;
+  background: #ff4d4d;     /* same as delete-btn */
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  border: none;
+  transition: 0.25s;
+}
+
+.cancel-btn:hover {
+  background: #ff6f6f;      /* same hover color as delete-btn */
+}
+
+/* ===========================================
+   HOME PAGE CARD IMAGE BACKGROUNDS (CLEAN)
+   =========================================== */
+
+/* ✅ Base card image behavior */
+.calendar-card,
+.events-card,
+.getinvolved-card {
+  background-size: cover !important;
+  background-position: center !important;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent !important;
+  box-shadow: 0px 8px 22px rgba(0,0,0,0.45) !important;
+  border-radius: 20px; /* keep your existing card shape */
+}
+
+/* ✅ Overlay */
+.calendar-card::before,
+.events-card::before,
+.getinvolved-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55); /* darkness level */
+  z-index: 1;
+}
+
+/* ✅ Text above overlay */
+.calendar-card h2,
+.events-card h2,
+.getinvolved-card h2 {
+  position: relative;
+  z-index: 2;
+  color: #fff !important;
+  text-shadow: 0px 0px 10px rgba(0,0,0,0.9), 0px 0px 4px rgba(0,0,0,1);
+}
+
+/* ✅ Assign images */
+.calendar-card {
+  background-image: url("/calendar2.avif") !important;
+}
+
+.events-card {
+  background-image: url("/events.avif") !important;
+}
+
+.getinvolved-card {
+  background-image: url("/getinvolved.avif") !important;
+}
+
+/* ✅ Hover shadow boost */
+.calendar-card:hover,
+.events-card:hover,
+.getinvolved-card:hover {
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.38) !important;
+}
+
+/* Remove dark overlay on hover */
+.calendar-card:hover::before,
+.events-card:hover::before,
+.getinvolved-card:hover::before {
+  background: rgba(0,0,0,0) !important;
+}
+
+.calendar-card::before,
+.events-card::before,
+.getinvolved-card::before {
+  transition: background 0.3s ease;
+}
+
+
+/* ================================
+   RESPONSIVE — GLOBAL / HOME / EVENTS / SHIFTS
+   ================================ */
+
+/* Home: stack cards vertically */
+@media (max-width: 900px) {
+  .card-grid {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .card {
+    width: min(92vw, 520px);
+    height: 150px;
+  }
+  .card h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Events: 2 per row and cards expand */
+@media (max-width: 900px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .event-card {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+/* Event Shifts: cards full-width on mobile */
+@media (max-width: 768px) {
+  .shift-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .shift-card {
+    width: 100%;
+  }
+  /* keep action rows tidy if they wrap */
+  .event-header-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* Signup popup: tighten on very small screens */
+@media (max-width: 480px) {
+  .signup-popup {
+    max-width: 92vw;
+    padding: 20px;
+  }
+  .popup-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Typography scale-down for small phones */
+@media (max-width: 480px) {
+  h1 { font-size: 2rem; }
+  .event-title { font-size: 1.6rem; }
+}
+
+/* ================================================
+   EVENTS PAGE — IMAGE CARDS (Match Home Page Style)
+   ================================================ */
+
+.image-event-card {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  position: relative;
+  overflow: hidden;
+
+  /* Same drop shadow as home cards */
+  box-shadow: 0px 8px 22px rgba(0,0,0,0.45) !important;
+  border-radius: 20px;
+}
+
+/* ✅ Dark overlay (same as home) */
+.image-event-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+  transition: 0.25s ease;
+}
+
+/* ✅ Remove dimming on hover (same as home) */
+.image-event-card:hover::before {
+  background: rgba(0,0,0,0.15);
+}
+
+/* ✅ Text above overlay */
+.image-event-card h2 {
+  position: relative;
+  z-index: 2;
+  color: white !important;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ✅ Smooth hover lift (same as home) */
+.image-event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 12px 28px rgba(0,0,0,0.5) !important;
 }

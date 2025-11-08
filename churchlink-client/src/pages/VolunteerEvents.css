@@ -166,3 +166,105 @@
 .event-header {
   margin-bottom: 30px !important;
 }
+
+/* =========================================================
+   GET INVOLVED FORM (matches Login + Create Event)
+   ========================================================= */
+
+/* Centers the form container */
+.form-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Card-style form box */
+.form-container {
+  width: 100%;
+  max-width: 500px;
+  background: #1d202f;              /* same as Login/CreateEvent */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Inputs + Textarea shared styling */
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #2a2e42;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: #bbb;
+}
+
+/* Submit button (matches Create Event) */
+.form-button {
+  padding: 12px;
+  border-radius: 8px;
+  background: #44c1f1;
+  color: #000;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease-in-out;
+}
+
+.form-button:hover {
+  background: #66d2ff;
+}
+
+/* ================================
+   RESPONSIVE — VOLUNTEER / GET INVOLVED / EMBEDDED CALENDAR
+   ================================ */
+
+/* Volunteer event cards: 2-up on tablet/phone */
+@media (max-width: 900px) {
+  .volunteer-events-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 700px;
+  }
+}
+@media (max-width: 600px) {
+  .volunteer-events-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .volunteer-card { padding: 18px; }
+}
+
+/* Get Involved form: centered + breathing room */
+@media (max-width: 600px) {
+  .form-wrapper { padding: 0 16px; }
+  .form-container { padding: 20px; }
+}
+
+/* Embedded calendar on this page: shrink nicely */
+@media (max-width: 768px) {
+  .calendar-box { max-width: 100%; }
+  .react-calendar {
+    padding: 16px !important;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .react-calendar {
+    padding: 10px !important;
+    font-size: 0.9rem;
+  }
+  .react-calendar__tile {
+    padding: 8px 4px !important;
+  }
+}
+

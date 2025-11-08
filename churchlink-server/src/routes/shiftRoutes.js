@@ -78,7 +78,12 @@ router.get(
 );
 
 // ✅ GET SINGLE SHIFT BY ID (needed for edit page)
-router.get("/:id", authenticateToken, authorizeRoles("Admin", "TeamLead", "Volunteer"), async (req, res) => {
+router.get(
+  "/event/:eventId",
+  authenticateToken,
+  authorizeRoles("Admin", "TeamLead", "Volunteer"),
+  async (req, res) => {
+    console.log("✅ Shift route hit for event:", req.params.eventId);
   try {
     const { id } = req.params;
 
