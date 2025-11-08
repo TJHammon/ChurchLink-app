@@ -1,66 +1,84 @@
 ChurchLink – Volunteer & Event Management App
 
-ChurchLink is a full-stack web application designed to help churches and ministries manage events, volunteer scheduling, attendance, and administrative workflows. Built as a capstone project, it demonstrates modern front-end development, secure back-end architecture, RESTful API design, and database interaction.
+A full-stack ministry management system for events, shifts, and volunteer coordination.
 
-Features
+ChurchLink is a full-stack web application designed to help churches streamline event organization, volunteer scheduling, and ministry communication. Built as a capstone project, it demonstrates real-world development skills: modern React UI, secure Node/Express backend, RESTful APIs, JWT authentication, and a structured MySQL database.
+
+✅ Features
 User Roles:
-Admin – Full access: create events, create shifts, approve/deny signups, attendance tracking.
-Team Lead – Manage shifts for their teams, approve signups, track attendance.
-Volunteer – View events, sign up for shifts, track commitments.
+Admin:
+Create, edit, and delete events
+Create and manage shifts
+View and manage volunteer signups
+Track attendance (planned enhancement)
 
-Core Functionality
+Volunteer:
+Browse events
+View open shifts
+Sign up via a confirmation popup
+Track commitments
+
+✅ Core Functionality
+Home Page:
+Three feature cards (Calendar, Events, Get Involved)
+Image-based backgrounds with dark overlay and hover reveal effect
+Completely responsive layout
+
+Calendar:
+React Calendar integration
+Highlighted event dates
+Dark mode and mobile-friendly layout
+
 Events:
-Create and manage events
-Event detail pages
-View shifts per event
+Image-based event cards with text overlay
+Displays event title and formatted date
+Responsive 2–3 column grid
+Clicking opens the Event Shifts page
 
-Shifts:
-Create, update, and delete shifts
-Capacity limits
-Track signups
-Assign volunteers
+Event Shifts:
+Modern shift cards showing time, capacity, and signups
+Volunteers click a card to open a signup confirmation popup
+Admins have Edit/Delete buttons
+Fully mobile-responsive (full-width cards on mobile)
 
-Volunteer Signups:
-Volunteers can sign up for open shifts
-Prevent duplicate or over-capacity signups
-Admin/Lead can approve/cancel signups
-Attendance Tracking (in progress)
-Lead/Admin check-in
-Optional self-check-in workflow
+Get Involved:
+Contact form for new volunteers
+Styled to match Login/Create Event pages
+Future-ready for CRM integration
 
 Tech Stack
 Frontend:
 React (Vite)
 React Router
-CSS Modules / Custom Styling
+Custom CSS
 Fetch API
+Responsive design with custom breakpoints
 
 Backend:
 Node.js
 Express.js
 RESTful API architecture
-Authentication & Authorization (JWT)
-Role-based routes
+JWT authentication
+Role-based middleware
 
 Database:
-MySQL
-Tables include:
+MySQL, including tables for:
 users
 events
 teams
 shifts
 shift_signups
 
-Project Requirements Met
-✔ React front-end
-✔ Node + Express back-end
-✔ SQL database
+Key Features Delivered
 ✔ Full CRUD operations
-✔ User authentication (JWT)
-✔ Role-based access
-✔ Fully responsive styling (in progress)
+✔ Authentication with JWT
+✔ Role-based access control
+✔ Volunteer shift sign-up system
+✔ Popup confirmation workflow
+✔ Image-based event cards
+✔ Fully responsive UI
 ✔ GitHub version control
-✔ Agile workflow (Trello board)
+✔ Agile workflow (Trello)
 
 Local Setup (Run This Project Locally)
 1. Clone the repository
